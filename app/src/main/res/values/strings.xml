@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Jasoseol_Assignment</string>
+    <string name="title">맞춤 공고</string>
+    <string name="notice">아직 확인하지 않은 맞춤 공고들이 남아있어요.</string>
+    <string name="companyName">SSG닷컴</string>
+    <string name="fields">사무 전문직</string>
+    <string name="endTime">~03월 12일 23시 59분</string>
+</resources>

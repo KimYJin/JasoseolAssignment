@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="endTimeColor">#757474</color>
+    <color name="fieldColor">#5d5c5c</color>
+    <color name="itemBackgroundColor">#f8f7f7</color>
+    <color name="itemColor">#ffffff</color>
+    <color name="strokeColor">#e2e2e2</color>
+    <color name="toolbarTextColor">#ff6915</color>
+    <color name="toolbarBackgroundColor">#ffffff</color>
+    <color name="noticeColor">#939090</color>
+</resources>
