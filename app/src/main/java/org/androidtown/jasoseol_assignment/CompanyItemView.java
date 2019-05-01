@@ -34,6 +34,7 @@ public class CompanyItemView extends ConstraintLayout {
         init(context);
     }
 
+    /* Inflate view(layout in company_item.xml) for each item of list view*/
     public void init(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.company_item, this, true);
@@ -61,17 +62,28 @@ public class CompanyItemView extends ConstraintLayout {
         this.endTime.setText(endTime);
     }
 
-    public void setSelectStar() {
+    public void setSelectStar(final CompanyItem item) {
+
+        if (item.getSelectStar()) {
+            selectStar.setSelected(true);
+        } else {
+            selectStar.setSelected(false);
+        }
+
+        //When imageButton(selectStar) is clicked, change state
         selectStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (view.isSelected()) {
+                if (item.getSelectStar()) {
                     view.setSelected(false);
+                    item.setSelectStar(false);
                 } else {
                     view.setSelected(true);
+                    item.setSelectStar(true);
                 }
             }
         });
-
     }
+
 }
+

@@ -1,19 +1,19 @@
 package org.androidtown.jasoseol_assignment;
 
-import android.support.constraint.ConstraintLayout;
-
 public class CompanyItem {
 
     private String companyName;
     private String fields;
     private String image;
     private String endTime;
+    private Boolean selectStar;
 
     public CompanyItem(String companyName, String fields, String image, String endTime) {
         this.companyName = companyName;
         this.fields = fields;
         this.image = image;
         this.endTime = endTime;
+        this.selectStar = false;
     }
 
     public String getCompanyName() {
@@ -45,13 +45,20 @@ public class CompanyItem {
         String[] date = dateTime[0].split("-");
         String[] time = dateTime[1].split(":");
 
-        return "~"+date[1]+"월 "+date[2]+"일 "+time[0]+"시 "+time[1]+"분";
+        return "~" + date[1] + "월 " + date[2] + "일 " + time[0] + "시 " + time[1] + "분";
     }
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
+    public Boolean getSelectStar() {
+        return selectStar;
+    }
+
+    public void setSelectStar(Boolean selectStar) {
+        this.selectStar = selectStar;
+    }
 
 
 }

@@ -2,72 +2,69 @@ package org.androidtown.jasoseol_assignment;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
 public class CompanyAdapter extends BaseAdapter {
 
     private Context context;
-
-    private ArrayList<CompanyItem> companyList;
+    private ArrayList<CompanyItem> companyList; //store companyItem object which has data of each item
 
     public CompanyAdapter(Context context) {
         this.context = context;
-        Log.d("testCase", "context initialized");
     }
 
+    //set data for each item of listView
     public void setItem(ArrayList<CompanyItem> companyList) {
         this.companyList = companyList;
         notifyDataSetChanged();
-        Log.d("testCase", "setItem");
     }
 
-    @Override       //return the number of items
+    /**
+     * @return the number of items
+     */
+    @Override
     public int getCount() {
-        Log.d("testCase", "getCount");
         return companyList.size();
     }
 
     @Override
-    public Object getItem(int i) {
-        Log.d("testCase", "getItem");
-        return companyList.get(i);
+    public Object getItem(int position) {
+        return companyList.get(position);
     }
 
     @Override
-    public long getItemId(int i) {
-        Log.d("testCase", "getItemId");
+    public long getItemId(int position) {
         return 0;
     }
 
-    @Override       //return view which is represented to each item
-    public View getView(int i, View convertView, ViewGroup viewGroup) {
-        Log.d("testCase", "getView");
+    /**
+     *
+     * @param position of item to be viewed in listView
+     * @param convertView is view object corresponding to the current index
+     * @param viewGroup is parent container object which contains
+     * @return view to display item
+     */
+    @Override
+    public View getView(int position, View convertView, ViewGroup viewGroup) {
 
         CompanyItemView view = null;
 
         if (convertView == null) {
-            view = new CompanyItemView(context);
-        }
-        else{
-            view = (CompanyItemView) convertView;
+            view = new CompanyItemView(context);    //create new CompanyItemView object
+        } else {
+            view = (CompanyItemView) convertView;   //when scrolling, recycle view already been created
         }
 
-        CompanyItem item = companyList.get(i);
+        CompanyItem item = companyList.get(position);
         view.setCompanyName(item.getCompanyName());
         view.setFields(item.getFields());
         view.setEndTime(item.getEndTime());
         view.setImage(item.getImage());
-        view.setSelectStar();
+        view.setSelectStar(item);
 
         return view;
     }

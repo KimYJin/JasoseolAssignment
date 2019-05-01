@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,37 +24,48 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar mToolbar = (Toolbar)findViewById(R.id.list_toolBar);
+        /*create back-button at tool bar*/
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.list_toolBar);
         setSupportActionBar(mToolbar);
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.arrow);
 
-        ListView listView = findViewById(R.id.list_container);
-
-        CompanyAdapter companyAdapter = new CompanyAdapter(this);
-        companyAdapter.setItem(getCompanyList());
-        listView.setAdapter(companyAdapter);
+        ListView listView = findViewById(R.id.list_container);      //create ListView object
+        CompanyAdapter companyAdapter = new CompanyAdapter(this);       //create Adapter object
+        companyAdapter.setItem(getCompanyList());       //set data for items of listView
+        listView.setAdapter(companyAdapter);        //set Adapter object to listView
     }
 
+    /*activate back-button of tool bar*/
     @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return super.onSupportNavigateUp();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
-     * Json을 파싱하여 데이터 리스트를 만들어서 반환한다.
+     * do JSON Parsing
+     * @return ArrayList<CompanyItem>
      */
     private ArrayList<CompanyItem> getCompanyList() {
+
         ArrayList<CompanyItem> companyList = new ArrayList();
+
         try {
             JSONArray jsonArray = new JSONArray(loadJSONFromAsset());
+
             for (int i = 0; i < jsonArray.length(); i++) {
-                String companyName = jsonArray.getJSONObject(i).getString("company_name");
-                String fields = jsonArray.getJSONObject(i).getString("fields");
-                String image = jsonArray.getJSONObject(i).getString("image");
-                String endTime = jsonArray.getJSONObject(i).getString("end_time");
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                String companyName = jsonObject.getString("company_name");
+                String fields = jsonObject.getString("fields");
+                String image = jsonObject.getString("image");
+                String endTime = jsonObject.getString("end_time");
 
                 companyList.add(new CompanyItem(companyName, fields, image, endTime));
             }
@@ -64,15 +76,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Json 파일을 가져와 String 타입으로 변환하여 반환한다.
-     */
+     * read json file
+     * @return String
+     **/
     private String loadJSONFromAsset() {
         String json;
         try {
             InputStream is = getAssets().open("Android.json");
             int size = is.available();
             byte[] buffer = new byte[size];
-
             is.read(buffer);
             is.close();
 
