@@ -6,14 +6,12 @@ public class CompanyItem {
     private String fields;
     private String image;
     private String endTime;
-    private Boolean selectStar;
 
     public CompanyItem(String companyName, String fields, String image, String endTime) {
         this.companyName = companyName;
         this.fields = fields;
         this.image = image;
         this.endTime = endTime;
-        this.selectStar = false;
     }
 
     public String getCompanyName() {
@@ -52,13 +50,6 @@ public class CompanyItem {
         this.endTime = endTime;
     }
 
-    public Boolean getSelectStar() {
-        return selectStar;
-    }
-
-    public void setSelectStar(Boolean selectStar) {
-        this.selectStar = selectStar;
-    }
 
 
 }

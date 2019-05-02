@@ -1,6 +1,7 @@
 package org.androidtown.jasoseol_assignment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class CompanyItemView extends ConstraintLayout {
 
     ImageView image;
@@ -18,6 +21,11 @@ public class CompanyItemView extends ConstraintLayout {
     TextView fields;
     TextView endTime;
     ImageButton selectStar;
+
+    Context context;
+
+    SharedPreferences likes;
+    SharedPreferences.Editor editor;
 
     public CompanyItemView(Context context) {
         super(context);
@@ -36,6 +44,7 @@ public class CompanyItemView extends ConstraintLayout {
 
     /* Inflate view(layout in company_item.xml) for each item of list view*/
     public void init(Context context) {
+        this.context = context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.company_item, this, true);
 
@@ -63,27 +72,34 @@ public class CompanyItemView extends ConstraintLayout {
     }
 
     public void setSelectStar(final CompanyItem item) {
+        likes = context.getSharedPreferences("likes", MODE_PRIVATE);////
 
-        if (item.getSelectStar()) {
+        if(likes!=null && likes.getBoolean(item.getCompanyName(),false))
             selectStar.setSelected(true);
-        } else {
+        else
             selectStar.setSelected(false);
-        }
 
         //When imageButton(selectStar) is clicked, change state
         selectStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (item.getSelectStar()) {
-                    view.setSelected(false);
-                    item.setSelectStar(false);
-                } else {
-                    view.setSelected(true);
-                    item.setSelectStar(true);
-                }
+               SharedPreference(item, view);
             }
         });
     }
 
-}
+    // store star-selected state information using SharedPreferences
+    private void SharedPreference(CompanyItem item, View view) {
+        likes = context.getSharedPreferences("likes", MODE_PRIVATE);
+        editor = likes.edit();//
 
+        if (likes!=null && likes.getBoolean(item.getCompanyName(),false)) {
+            editor.putBoolean(item.getCompanyName(), false);
+            view.setSelected(false);
+        } else {
+            editor.putBoolean(item.getCompanyName(), true);
+            view.setSelected(true);
+        }
+        editor.commit();
+    }
+}
